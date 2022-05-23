@@ -1,14 +1,22 @@
 import React from 'react';
 import './App.css';
 
-const ColorAnalyzer = require('rgbaster');
+// const ColorAnalyzer = require('rgbaster');
 
 const App = () => {
 
-  const [imageUri, setImageUri] = React.useState<string>();
+  const [imageUri, setImageUri] = React.useState<string>("");
   const [porosity, setPorosity] = React.useState<number>(-1);
 
   const updateImage = (files: FileList | null): void => {
+    if (imageUri) {
+      // Clear canvas/porosity
+      const canvas: HTMLCanvasElement = document.getElementById('img-canvas') as HTMLCanvasElement;
+      const ctx = canvas.getContext('2d');
+      ctx?.clearRect(0, 0, canvas.width, canvas.height);
+      setPorosity(-1);
+    }
+
     if (files === null || files[0] === null) {
       console.error("No file found, returning");
       return;
@@ -30,14 +38,14 @@ const App = () => {
     })
   };
 
-  const getDominantColors = async () => {
-    const result = await ColorAnalyzer(imageUri);
-    console.log(result);
-  };
+  // const getDominantColors = async () => {
+  //   const result = await ColorAnalyzer(imageUri);
+  //   console.log(result);
+  // };
 
-  const convertToGrayscale = () => {
-    const img = document.getElementById('img');
-    const canvas: HTMLCanvasElement = document.getElementById('img-canvas') as HTMLCanvasElement || new HTMLCanvasElement();
+  const convertToBlackAndWhite = () => {
+    const img: HTMLElement | null = document.getElementById('img');
+    const canvas: HTMLCanvasElement = document.getElementById('img-canvas') as HTMLCanvasElement;
     const ctx = canvas.getContext('2d');
 
     // Set canvas width/height to image width/height
@@ -90,9 +98,6 @@ const App = () => {
       // Determine the percentage of black pixels - this will be the porosity
       let porosity = ((blackCount / (whiteCount + blackCount)) * 100);
 
-      // The magic multiplier --- don't know why this works but it seems to
-      porosity = porosity * .75;
-
       // Round to two decimal places
       setPorosity(parseFloat(porosity.toFixed(2)));
     }
@@ -101,17 +106,35 @@ const App = () => {
   return (
     <div className="App">
       <form>
-        <h2>Please select an image to calculate porosity</h2>
+        <h2>Select Image to Calculate Porosity</h2>
         <input
           type="file"
+          id="select-image"
+          accept="image/*"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateImage(e.target.files)}
+        />
+        <div id="capture-div">
+          <div><b>OR</b></div>
+          <input
+            id="capture-button"
+            type="button"
+            value="Capture Image"
+            onClick={() => document.getElementById('capture-image')?.click()}
+          />
+        </div>
+        <input
+          id="capture-image"
+          type="file"
+          accept="image/*"
+          capture="environment"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateImage(e.target.files)}
         />
       </form>
 
       {imageUri && <img id="img" src={imageUri} alt='img cannot be displayed'></img>}
-      {imageUri && <button onClick={() => convertToGrayscale()}>Convert to Grayscale</button>}
-      <canvas id="img-canvas"></canvas>
-      {porosity > 0 && <span>porosity: {porosity}%</span>}
+      <div>{imageUri && <button onClick={() => convertToBlackAndWhite()}>Calculate Porosity</button>}</div>
+      <div><canvas id="img-canvas"></canvas></div>
+      {porosity > 0 && <h2>Porosity: {porosity}%</h2>}
     </div>
   );
 }
