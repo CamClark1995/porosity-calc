@@ -57,7 +57,7 @@ const App = () => {
 
     // Draw the uploaded image to the canvas
     let canvasImg = img as CanvasImageSource;
-    ctx?.drawImage(canvasImg, 0, 0);
+    ctx?.drawImage(canvasImg, 0, 0, canvas.width, canvas.height);
 
     // Get ImageData obj from canvas
     let imgData: ImageData | undefined = ctx?.getImageData(0, 0, canvas.width, canvas.height);
@@ -109,24 +109,7 @@ const App = () => {
         <h2>Select Image to Calculate Porosity</h2>
         <input
           type="file"
-          id="select-image"
           accept="image/*"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateImage(e.target.files)}
-        />
-        <div id="capture-div">
-          <div><b>OR</b></div>
-          <input
-            id="capture-button"
-            type="button"
-            value="Capture Image"
-            onClick={() => document.getElementById('capture-image')?.click()}
-          />
-        </div>
-        <input
-          id="capture-image"
-          type="file"
-          accept="image/*"
-          capture="environment"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateImage(e.target.files)}
         />
       </form>

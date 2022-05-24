@@ -38,24 +38,10 @@
 }
 
 #img {
-  max-width: 750px;
-  max-height: 750px;
+  max-width: 500px;
+  max-height: 500px;
 }
 
-.App > *, .App > form > input, #img-canvas, #capture-button {
+.App > *, .App > form > input, #img-canvas {
     margin: 10px;
-}
-
-#capture-image {
-  display: none;
-}
-
-#select-image {
-  width: 200px;
-}
-
-@media (min-width:600px) {
-  #capture-div {
-    display: none;
-  }
 }
