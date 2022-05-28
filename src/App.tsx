@@ -105,19 +105,21 @@ const App = () => {
 
   return (
     <div className="App">
-      <form>
-        <h2>Select Image to Calculate Porosity</h2>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateImage(e.target.files)}
-        />
-      </form>
+      <h2>Select Image to Calculate Porosity</h2>
+      <div id="top-row">
+        <form>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateImage(e.target.files)}
+          />
+        </form>
+        {imageUri && porosity < 0 && <button onClick={() => convertToBlackAndWhite()}>Calculate Porosity</button>}
+        {porosity > 0 && <span id="porosity-span">Porosity: {porosity}%</span>}
+      </div>
 
-      {imageUri && <img id="img" src={imageUri} alt='img cannot be displayed'></img>}
-      <div>{imageUri && <button onClick={() => convertToBlackAndWhite()}>Calculate Porosity</button>}</div>
+      {imageUri && porosity < 0 && <img id="img" src={imageUri} alt='img cannot be displayed'></img>}
       <div><canvas id="img-canvas"></canvas></div>
-      {porosity > 0 && <h2>Porosity: {porosity}%</h2>}
     </div>
   );
 }
