@@ -37,11 +37,16 @@
   }
 }
 
-#img {
-  /* max-width: 5000px;
-  max-height: 5000px; */
-}
-
 .App > *, .App > form > input, #img-canvas {
     margin: 10px;
+}
+
+#top-row {
+  display: flex;
+  justify-content: center;
+}
+
+#porosity-span {
+  font-weight: bold;
+  background-color: #FFFF00
 }
