@@ -38,8 +38,8 @@
 }
 
 #img {
-  max-width: 500px;
-  max-height: 500px;
+  /* max-width: 5000px;
+  max-height: 5000px; */
 }
 
 .App > *, .App > form > input, #img-canvas {
