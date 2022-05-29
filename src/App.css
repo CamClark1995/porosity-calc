@@ -48,5 +48,33 @@
 
 #porosity-span {
   font-weight: bold;
-  background-color: #FFFF00
+  background-color: #FFFF00;
+  margin-left: 5px;
+}
+
+#img-sm {
+  max-width: 400px;
+  max-height: 600px;
+}
+
+.displayBorder, #img-sm {
+  border: 1px solid black;
+}
+
+#threshold-select {
+  display: flex;
+  justify-content: center;
+}
+#threshold-select > button {
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.hide {
+  height: 0;
+  width: 0;
 }
