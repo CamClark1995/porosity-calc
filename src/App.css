@@ -48,7 +48,8 @@
 
 #porosity-span {
   font-weight: bold;
-  background-color: #FFFF00
+  background-color: #FFFF00;
+  margin-left: 5px;
 }
 
 #img-sm {
@@ -56,7 +57,7 @@
   max-height: 600px;
 }
 
-.canvas, #img-sm {
+.displayBorder, #img-sm {
   border: 1px solid black;
 }
 
