@@ -43,7 +43,7 @@ const App = () => {
   //   console.log(result);
   // };
 
-  const convertToBlackAndWhite = () => {
+  const convertToBlackAndWhite = (rgbThreshold: number) => {
     const img: HTMLElement | null = document.getElementById('img');
     const canvas: HTMLCanvasElement = document.getElementById('img-canvas') as HTMLCanvasElement;
     const ctx = canvas.getContext('2d');
@@ -75,7 +75,7 @@ const App = () => {
         let color: number = 0;
 
         // If rgb total is less than 382 (half the max), set color to 0 (black)
-        if (count < 382) {
+        if (count < rgbThreshold) {
           color = 0;
           blackCount++;
         }
@@ -95,12 +95,36 @@ const App = () => {
       // Draw the black and white image back to the canvas
       ctx?.putImageData(imgData, 0, 0);
 
+      downsizeImg(img, canvas, ctx);
+
       // Determine the percentage of black pixels - this will be the porosity
       let porosity = ((blackCount / (whiteCount + blackCount)) * 100);
 
       // Round to two decimal places
       setPorosity(parseFloat(porosity.toFixed(2)));
     }
+  };
+
+  const downsizeImg = (img: HTMLElement | null, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D | null): void => {
+    let canvas2: HTMLCanvasElement = document.createElement('canvas');
+    let context2 = canvas2.getContext("2d");
+
+    canvas2.width = canvas.width;
+    canvas2.height = canvas.height;
+    context2?.drawImage(canvas, 0, 0);
+
+    var curWidth = img?.clientWidth ?? 0;
+    var curHeight = img?.clientHeight ?? 0;
+
+    while (curWidth > 400 || curHeight > 600) {
+      curWidth = curWidth * .9;
+      curHeight = curHeight * .9;
+      ctx?.drawImage(canvas2, 0, 0, curWidth, curHeight);
+    }
+
+    canvas.width = curWidth;
+    canvas.height = curHeight;
+    ctx?.drawImage(canvas2, 0, 0, curWidth, curHeight);
   };
 
   return (
@@ -114,12 +138,23 @@ const App = () => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateImage(e.target.files)}
           />
         </form>
-        {imageUri && porosity < 0 && <button onClick={() => convertToBlackAndWhite()}>Calculate Porosity</button>}
+        {imageUri && porosity < 0 && <button onClick={() => convertToBlackAndWhite(Math.floor(755 * .5))}>Calculate Porosity</button>}
         {porosity > 0 && <span id="porosity-span">Porosity: {porosity}%</span>}
       </div>
 
-      {imageUri && porosity < 0 && <img id="img" src={imageUri} alt='img cannot be displayed'></img>}
-      <div><canvas id="img-canvas"></canvas></div>
+      {imageUri && <img id="img-sm" src={imageUri} alt="img cannot be displayed"></img>}
+      {porosity > 0 &&
+        <div id="threshold-select">
+          <button onClick={() => convertToBlackAndWhite(Math.floor(755 * .25))}>Threshold 1</button>
+          <button onClick={() => convertToBlackAndWhite(Math.floor(755 * .33))}>Threshold 2</button>
+          <button onClick={() => convertToBlackAndWhite(Math.floor(755 * .5))}>Threshold 3 (default)</button>
+          <button onClick={() => convertToBlackAndWhite(Math.floor(755 * .66))}>Threshold 4</button>
+          <button onClick={() => convertToBlackAndWhite(Math.floor(755 * .75))}>Threshold 5</button>
+        </div>
+      }
+      <div className={porosity < 0 ? "hide" : ""}><canvas id="img-canvas" className={porosity > 0 ? "canvas" : ""}></canvas></div>
+      {imageUri && <img id="img" className="hidden" src={imageUri} alt='img cannot be displayed'></img>}
+
     </div>
   );
 }
