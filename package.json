@@ -58,5 +58,5 @@
   "devDependencies": {
     "gh-pages": "^5.0.0"
   },
-  "homepage": "http://{camclark1995}.github.io/{porosity-calc}"
+  "homepage": "https://camclark1995.github.io/porosity-calc/"
 }
