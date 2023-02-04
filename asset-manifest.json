@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/porosity-calc/static/css/main.0deb644b.css",
-    "main.js": "/porosity-calc/static/js/main.200ba3df.js",
-    "static/js/787.3b017cea.chunk.js": "/porosity-calc/static/js/787.3b017cea.chunk.js",
-    "service-worker.js": "/porosity-calc/service-worker.js",
-    "index.html": "/porosity-calc/index.html",
-    "main.0deb644b.css.map": "/porosity-calc/static/css/main.0deb644b.css.map",
-    "main.200ba3df.js.map": "/porosity-calc/static/js/main.200ba3df.js.map",
-    "787.3b017cea.chunk.js.map": "/porosity-calc/static/js/787.3b017cea.chunk.js.map"
+    "main.css": "/static/css/main.0deb644b.css",
+    "main.js": "/static/js/main.bb521971.js",
+    "static/js/787.3b017cea.chunk.js": "/static/js/787.3b017cea.chunk.js",
+    "service-worker.js": "/service-worker.js",
+    "index.html": "/index.html",
+    "main.0deb644b.css.map": "/static/css/main.0deb644b.css.map",
+    "main.bb521971.js.map": "/static/js/main.bb521971.js.map",
+    "787.3b017cea.chunk.js.map": "/static/js/787.3b017cea.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.0deb644b.css",
-    "static/js/main.200ba3df.js"
+    "static/js/main.bb521971.js"
   ]
 }
